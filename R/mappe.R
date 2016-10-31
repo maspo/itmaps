@@ -3,9 +3,9 @@
 #       valore che devo disegnare
 #       opzionale: scala di colori da usare e intervallo, altrimenti lo fa in automatico
 #così posso usare semplicemente il metodo plot
-mappa_province <- read.csv("~/Utile/mappaProvince2.txt", sep=";", stringsAsFactors=FALSE,na.strings="null")
-italy <- maptools::readShapeSpatial("D:\\Users\\a444226\\Documents\\Utile\\prov2011_g\\prov2011_g.shp")
-italy_reg <- maptools::readShapeSpatial("D:\\Users\\a444226\\Documents\\Utile\\reg2011_g\\reg2011_g.shp")
+mappa_province <- read.csv("data\\mappaProvince2.txt", sep=";", stringsAsFactors=FALSE,na.strings="null")
+italy <- maptools::readShapeSpatial("data\\prov2011_g.shp")
+italy_reg <- maptools::readShapeSpatial("data\\reg2011_g.shp")
 devtools::use_data(mappa_province, italy, overwrite = T)
 
 disegna_cartina2 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
