@@ -7,5 +7,5 @@ Maintainer: <massaropaolo86@gmail.com.com>
 Description: Tramite questo package e' possibile creare mappe coreopletiche dell'Italia per provincia regione e altri aggregati a partire da una transcodifica per provincia
 License: Libero di fare cio' che vuoi
 LazyData: no
-Imports: RColorBrewer,colorspace,rgeos,classInt,devtools
-Suggests: maptools
+Imports: RColorBrewer,colorspace,rgeos,classInt
+Suggests: maptools,devtools
