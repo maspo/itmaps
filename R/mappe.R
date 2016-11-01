@@ -9,7 +9,7 @@
 # mappa_regioni <- read.csv("data\\mappa_regioni.txt", sep=";", stringsAsFactors=FALSE,na.strings="null")
 # italy <- maptools::readShapeSpatial("data\\prov2011_g.shp")
 # italy_reg <- maptools::readShapeSpatial("data\\reg2011_g.shp")
-# devtools::use_data(italy, mappa_province, italy_reg, mappa_regioni, overwrite = T)
+devtools::use_data(italy, mappa_province, italy_reg, mappa_regioni, overwrite = T)
 
 disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
   require(maptools)
