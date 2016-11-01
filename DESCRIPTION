@@ -3,7 +3,7 @@ Type: Package
 Title: Crea mappe coreopletiche dell'Italia per provincia regione e altri insiemi
 Version: 0.1.0
 Author: Paolo Massaro
-Maintainer: <paolo.massaro@enel.com>
+Maintainer: <massaropaolo86@gmail.com.com>
 Description: Tramite questo package e' possibile creare mappe coreopletiche dell'Italia per provincia regione e altri aggregati a partire da una transcodifica per provincia
 License: Libero di fare cio' che vuoi
 LazyData: TRUE
