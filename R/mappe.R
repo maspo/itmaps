@@ -4,6 +4,7 @@
 #       opzionale: scala di colori da usare e intervallo, altrimenti lo fa in automatico
 #così posso usare semplicemente il metodo plot
 
+
 # mappa_province <- read.csv("data\\mappaProvince2.txt", sep=";", stringsAsFactors=FALSE,na.strings="null")
 # mappa_regioni <- read.csv("data\\mappa_regioni.txt", sep=";", stringsAsFactors=FALSE,na.strings="null")
 # italy <- maptools::readShapeSpatial("data\\prov2011_g.shp")
