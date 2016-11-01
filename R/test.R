@@ -10,6 +10,12 @@
 # italy_reg@data$NOME_REG[2] <- "VALLE D'AOSTA"
 # write.table(italy_reg@data,"mappa_regioni.txt",sep=";",dec=",")
 
+dati <- read.csv("D:\\Users\\a444226\\Documents\\Gestione Lead\\leads\\prova_shiny.csv", header=T, sep=";", stringsAsFactors = F, dec = ",", na.strings = "null")
+disegna_cartina2(dati)
+
+dati <- read.csv("data/template_regioni.csv", header=T, sep=";", stringsAsFactors = F, dec = ",", na.strings = "null")
+disegna_cartina(dati)
+
 # disegna_cartina3 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
 #   require(maptools)
 #   ordine<-data.frame(ID=0:109)

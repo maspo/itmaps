@@ -4,26 +4,39 @@
 #       opzionale: scala di colori da usare e intervallo, altrimenti lo fa in automatico
 #così posso usare semplicemente il metodo plot
 
+disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
+  require(maptools)
+  ordine<-data.frame(ID=1:20)
+  dati <- merge(dati,mappa_regioni)
+  dati<-merge(ordine,dati,all.x=TRUE)
+  italy_reg$valore<-dati$valore
+  #qui escludo quando non ho valori
+  lista <- !is.na(italy_reg$valore)
+  italy_reg <- italy_reg[lista,]
+  par(mai=c(0,0,0,0))
+  plot(italy_reg,col=colors[findInterval(italy_reg$valore,brks,all.inside=T)], axes=F,border = T)
+  if(legenda == T) legend_box("topright",legend=maptools::leglabs(round(rev(brks),1), under="Sopra", over="Meno di"), fill=rev(colors), bty="n",x.intersp = .5, y.intersp = .5, ...)
+  if(testi) {
+    centroidi <- rgeos::gCentroid(italy_reg,byid=T)
+    centroidiLons <- coordinates(centroidi)[,1]
+    centroidiLats <- coordinates(centroidi)[,2]
+    text(centroidiLons, centroidiLats, labels=dati$valore[lista], col="black", cex=1)
+  }
+}
+
+
 disegna_cartina2 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
   require(maptools)
   ordine<-data.frame(ID=0:109)
   dati <- merge(dati,mappa_province)
   dati<-merge(ordine,dati,all.x=TRUE)
-  #   dati<-merge(ordine,dati)
   italy$valore<-dati$valore
-  #   italy$totale[23,1]<--1
-  # colors <- brewer.pal(9, "YlOrRd")
-  #   brks<-classIntervals(dati$valore, n=length(colors), style="quantile")
-  #   brks<- brks$brks
-  #   plot(italy[italy$COD_PRO %in% dati$COD_PRO,],col=colors[findInterval(dati$valore,brks,all.inside=T)], axes=F,border = T)
   #qui escludo quando non ho valori
   lista <- !is.na(italy$valore)
   italy <- italy[lista,]
   par(mai=c(0,0,0,0))
   plot(italy,col=colors[findInterval(italy$valore,brks,all.inside=T)], axes=F,border = F)
-  # if(legenda == T) legend_box("topright",legend=maptools::leglabs(round(rev(brks),0), under="Sopra", over="Meno di"), fill=rev(colors), bty="n",x.intersp = .5, y.intersp = .5, ...)
   if(legenda == T) legend_box("topright",legend=maptools::leglabs(round(rev(brks),1), under="Sopra", over="Meno di"), fill=rev(colors), bty="n",x.intersp = .5, y.intersp = .5, ...)
-  #   italy <- unionSpatialPolygons(italy,rep(1,length(italy@data$COD_REG)))
   if(testi) {
     centroidi <- rgeos::gCentroid(italy,byid=T)
     centroidiLons <- coordinates(centroidi)[,1]
