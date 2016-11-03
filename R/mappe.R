@@ -10,7 +10,7 @@ italy <- maptools::readShapeSpatial("data/prov2011_g.shp")
 italy_reg <- maptools::readShapeSpatial("data/reg2011_g.shp")
 devtools::use_data(italy, mappa_province, italy_reg, mappa_regioni, overwrite = T)
 
-disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
+disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, valori = F, ...) {
   require(maptools)
   ordine<-data.frame(ID=1:20)
   dati <- merge(dati,mappa_regioni)
@@ -22,7 +22,7 @@ disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), 
   par(mai=c(0,0,0,0))
   plot(italy_reg,col=colors[findInterval(italy_reg$valore,brks,all.inside=T)], axes=F,border = T)
   if(legenda == T) legend_box("topright",legend=maptools::leglabs(round(rev(brks),1), under="Sopra", over="Meno di"), fill=rev(colors), bty="n",x.intersp = .5, y.intersp = .5, ...)
-  if(testi) {
+  if(valori) {
     centroidi <- rgeos::gCentroid(italy_reg,byid=T)
     centroidiLons <- coordinates(centroidi)[,1]
     centroidiLats <- coordinates(centroidi)[,2]
@@ -31,7 +31,7 @@ disegna_cartina <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), 
 }
 
 
-disegna_cartina2 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, ...) {
+disegna_cartina2 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"), brks=classInt::classIntervals(dati$valore, n=length(colors), style="quantile")$brks, legenda = F, testi = F, valori = F, ...) {
   require(maptools)
   ordine<-data.frame(ID=0:109)
   dati <- merge(dati,mappa_province)
@@ -49,6 +49,13 @@ disegna_cartina2 <- function(dati, colors=RColorBrewer::brewer.pal(9, "YlOrRd"),
     centroidiLats <- coordinates(centroidi)[,2]
     text(centroidiLons, centroidiLats, labels=dati$provincia[lista], col="black", cex=1)
   }
+  if(valori) {
+    centroidi <- rgeos::gCentroid(italy,byid=T)
+    centroidiLons <- coordinates(centroidi)[,1]
+    centroidiLats <- coordinates(centroidi)[,2]
+    text(centroidiLons, centroidiLats, labels=dati$valore[lista], col="black", cex=1)
+  }
+
   italy <- maptools::unionSpatialPolygons(italy,italy@data$COD_REG)
   plot(italy,add=T, border="black")
   # return(brks)
